@@ -1,15 +1,14 @@
-from PySide2 import QtQuick, QtCore, QtGui, QtQml
+from PySide2 import QtCore
 import os
 
 
-class FileModel(QtCore.QAbstractListModel):
+class ImageModel(QtCore.QAbstractListModel):
     NameRole = QtCore.Qt.UserRole + 1000
     PathRole = QtCore.Qt.UserRole + 1001
 
-    def __init__(self, files, callback, parent=None):
-        super(FileModel, self).__init__(parent)
+    def __init__(self, files, parent=None):
+        super(ImageModel, self).__init__(parent)
         self._files = files
-        self.callback = callback
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         if parent.isValid():
@@ -19,15 +18,15 @@ class FileModel(QtCore.QAbstractListModel):
     def data(self, index, role=QtCore.Qt.DisplayRole):
         if 0 <= index.row() < self.rowCount() and index.isValid():
             item = self._files[index.row()]
-            if role == FileModel.NameRole:
+            if role == ImageModel.NameRole:
                 return item["name"]
-            elif role == FileModel.PathRole:
+            elif role == ImageModel.PathRole:
                 return item["path"]
 
     def roleNames(self):
         roles = {}
-        roles[FileModel.NameRole] = b"name"
-        roles[FileModel.PathRole] = b"path"
+        roles[ImageModel.NameRole] = b"name"
+        roles[ImageModel.PathRole] = b"path"
         return roles
 
     def appendRow(self, row):
@@ -54,22 +53,19 @@ class FileModel(QtCore.QAbstractListModel):
 
     @QtCore.Slot(str)
     def populate(self, dir):
-        self.callback(dir)
-
         entries = os.listdir(dir)
-        new_files = [{"name": "..", "path": dir + os.sep + ".."}]
+        new_files = []
         for entry in entries:
-            if os.path.isdir(dir + os.sep + entry):
+            if os.path.isfile(dir + os.sep + entry) and entry.endswith(".png"):
                 new_files.append({"name": entry, "path": dir + os.sep + entry})
 
         self.reset(new_files)
 
 
-class FileModelProvider(QtCore.QObject):
-    def __init__(self, files, callback, parent=None):
-        super(FileModelProvider, self).__init__(parent)
-        self._model = FileModel(files, callback)
-        self.callback = callback
+class ImageModelProvider(QtCore.QObject):
+    def __init__(self, files, parent=None):
+        super(ImageModelProvider, self).__init__(parent)
+        self._model = ImageModel(files)
 
     @QtCore.Property(QtCore.QObject, constant=True)
     def model(self):

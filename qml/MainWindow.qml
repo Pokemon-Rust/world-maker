@@ -11,7 +11,8 @@ ApplicationWindow {
     id: window
     visible: true
     width: 960
-    height: 480
+    height: 960
+    visibility: "Maximized"
 
     minimumHeight: 480
     minimumWidth: 640
@@ -19,7 +20,7 @@ ApplicationWindow {
 
     color: "white"
 
-    FileSystemView {
+    FileSystemView {}
 
-    }
+    ImageGridView {}
 }
