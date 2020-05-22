@@ -1,8 +1,8 @@
-from PySide2 import QtQuick, QtCore, QtGui, QtQml
-import os
+from PySide2 import QtCore
 
 from models.filesystem_model import FileModelProvider
 from models.imagegridview_model import ImageModelProvider
+from models.worldgridview_provider import WorldModelProvider
 
 
 class Backend(QtCore.QObject):
@@ -10,6 +10,7 @@ class Backend(QtCore.QObject):
         super(Backend, self).__init__(parent)
         self._imageModelProvider = ImageModelProvider([])
         self._fileModelProvider = FileModelProvider([{"name": "/", "path": "/"}], self.populateImageModel)
+        self._worldModelProvider = WorldModelProvider([])
 
     def populateImageModel(self, dir):
         self._imageModelProvider.model.populate(dir)
@@ -21,3 +22,15 @@ class Backend(QtCore.QObject):
     @QtCore.Property(QtCore.QObject, constant=True)
     def imageModelProvider(self):
         return self._imageModelProvider
+
+    @QtCore.Property(QtCore.QObject, constant=True)
+    def worldModelProvider(self):
+        return self._worldModelProvider
+
+    @QtCore.Property(int, constant=True)
+    def numHorCell(self):
+        return 50
+
+    @QtCore.Property(int, constant=True)
+    def numVerCell(self):
+        return 50

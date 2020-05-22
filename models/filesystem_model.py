@@ -1,4 +1,4 @@
-from PySide2 import QtQuick, QtCore, QtGui, QtQml
+from PySide2 import QtCore
 import os
 
 
@@ -25,9 +25,7 @@ class FileModel(QtCore.QAbstractListModel):
                 return item["path"]
 
     def roleNames(self):
-        roles = {}
-        roles[FileModel.NameRole] = b"name"
-        roles[FileModel.PathRole] = b"path"
+        roles = {FileModel.NameRole: b"name", FileModel.PathRole: b"path"}
         return roles
 
     def appendRow(self, row):

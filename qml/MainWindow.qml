@@ -20,7 +20,32 @@ ApplicationWindow {
 
     color: "white"
 
-    FileSystemView {}
+    Rectangle {
+        id: toolBar
+        width: parent.width
+        height: 64
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+    }
 
-    ImageGridView {}
+    Rectangle {
+        id: views
+        color: "transparent"
+        width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.top: toolBar.bottom
+
+        FileSystemView {
+            id: fileSystemView
+        }
+
+        ImageGridView {}
+
+        WorldGridView {}
+    }
+
+
 }

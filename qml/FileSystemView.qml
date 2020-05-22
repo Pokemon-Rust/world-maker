@@ -9,7 +9,7 @@ import QtGraphicalEffects 1.0
 
 
 Rectangle {
-    width: parent.width / 4
+    width: parent.width * 0.15
     height: parent.height * 0.66
     anchors.left: parent.left
     anchors.top: parent.top

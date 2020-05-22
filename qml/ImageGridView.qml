@@ -8,8 +8,8 @@ import QtQuick.Dialogs 1.0
 import QtGraphicalEffects 1.0
 
 Rectangle {
-    width: parent.width * 0.75
-    height: parent.height * 0.33
+    width: parent.width * 0.85
+    anchors.top: fileSystemView.bottom
     anchors.left: parent.left
     anchors.bottom: parent.bottom
     border.width: 2
@@ -25,9 +25,11 @@ Rectangle {
             border.width: 2
             border.color: "black"
             color: "black"
+            clip: true
             Column {
                 anchors.fill: parent
                 Image {
+                    asynchronous: true
                     source: path
                     anchors.horizontalCenter: parent.horizontalCenter
                     y: gridItem.border.width
@@ -42,7 +44,7 @@ Rectangle {
                     bottomPadding: 10
                     wrapMode: Text.WordWrap
                     width: grid.cellWidth - 2 * gridItem.border.width
-                    height: 20
+                    height: 40
 
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -71,7 +73,7 @@ Rectangle {
     GridView {
         id: grid
         anchors.fill: parent
-        cellWidth: 128; cellHeight: 128
+        cellWidth: 128; cellHeight: 168
         boundsBehavior: Flickable.StopAtBounds
         clip: true
         flickableDirection: Flickable.VerticalFlick

@@ -24,9 +24,7 @@ class ImageModel(QtCore.QAbstractListModel):
                 return item["path"]
 
     def roleNames(self):
-        roles = {}
-        roles[ImageModel.NameRole] = b"name"
-        roles[ImageModel.PathRole] = b"path"
+        roles = {ImageModel.NameRole: b"name", ImageModel.PathRole: b"path"}
         return roles
 
     def appendRow(self, row):
