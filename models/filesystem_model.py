@@ -59,9 +59,9 @@ class FileModel(QtCore.QAbstractListModel):
         entries = os.listdir(dir)
         new_files = [{"name": "..", "path": dir + os.sep + ".."}]
         for entry in entries:
-            if os.path.isdir(dir + os.sep + entry):
+            if os.path.isdir(dir + os.sep + entry) and not entry.startswith("."):
                 new_files.append({"name": entry, "path": dir + os.sep + entry})
-
+        new_files = sorted(new_files, key=lambda x: x["name"])
         self.reset(new_files)
 
 

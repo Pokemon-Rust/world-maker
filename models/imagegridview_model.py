@@ -58,7 +58,7 @@ class ImageModel(QtCore.QAbstractListModel):
         for entry in entries:
             if os.path.isfile(dir + os.sep + entry) and entry.endswith(".png"):
                 new_files.append({"name": entry, "path": dir + os.sep + entry})
-
+        new_files = sorted(new_files, key=lambda x: x["name"])
         self.reset(new_files)
 
 
